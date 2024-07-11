@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
+
+import 'divider_button.dart';
+import 'thing_view.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({
@@ -16,28 +18,27 @@ class DashboardView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Rank Everything'),
       ),
-      body: Column(
+      body: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
         children: [
-          ThingView(thing: thingProvider.thing1),
-          const Divider(),
-          ThingView(thing: thingProvider.thing2),
+          Column(
+            children: [
+              ThingView(
+                thing: thingProvider.thing1,
+                selected: thingProvider.selectedThing == 1,
+                onSelect: () => thingProvider.selectThing(1),
+              ),
+              ThingView(
+                thing: thingProvider.thing2,
+                selected: thingProvider.selectedThing == 2,
+                onSelect: () => thingProvider.selectThing(2),
+              ),
+            ],
+          ),
+          const DividerButton(),
         ],
       ),
-    );
-  }
-}
-
-class ThingView extends StatelessWidget {
-  const ThingView({super.key, required this.thing});
-
-  final Thing? thing;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: thing != null
-          ? Image.network(thing!.image)
-          : const CircularProgressIndicator(),
     );
   }
 }

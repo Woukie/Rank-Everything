@@ -1,26 +1,40 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 
+enum GameState { idle, starting, choosing, chosen }
+
 class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
   int _selectedThing = 0;
+  bool _expectingThingsFromServer = false;
   Thing? _thing1, _thing2;
 
   Thing? get thing1 => _thing1;
   Thing? get thing2 => _thing2;
+
+  GameState get gameState {
+    bool thingsLoaded = thing1 != null && thing2 != null;
+
+    if (!thingsLoaded) {
+      return !_expectingThingsFromServer ? GameState.idle : GameState.starting;
+    }
+
+    return selectedThing == 0 ? GameState.choosing : GameState.chosen;
+  }
 
   /// Currently chosen thing, 0 corresponding to unselected
   int get selectedThing => _selectedThing;
 
   /// Resets things and selection, then fetches the next two things
   Future<void> loadNextThings() async {
+    if (_expectingThingsFromServer) return;
+
     _thing1 = null;
     _thing2 = null;
     _selectedThing = 0;
+    _expectingThingsFromServer = true;
     notifyListeners();
 
-    sleep(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 5));
 
     _thing1 = Thing(
       name: "Bread",
@@ -28,15 +42,19 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
           "https://www.cookingclassy.com/wp-content/uploads/2020/04/bread-recipe-1.jpg",
       description: "The shit you eat",
       votes: 123,
+      adult: false,
     );
 
-    _thing1 = Thing(
+    _thing2 = Thing(
       name: "Mercury Poisoning",
       image:
-          "https://cdn-01.media-brady.com/store/stus/media/catalog/product/cache/4/image/85e4522595efc69f496374d01ef2bf13/1617235180/c/h/chemical-ghs-signs-mercury-l8565-lg.jpg",
+          "https://thumbs.dreamstime.com/z/mercury-metal-drops-shiny-droplets-isolated-white-background-66388405.jpg",
       description: "Kills you",
       votes: 1102,
+      adult: false,
     );
+
+    _expectingThingsFromServer = false;
 
     notifyListeners();
 
