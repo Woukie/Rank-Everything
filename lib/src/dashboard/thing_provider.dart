@@ -40,7 +40,7 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
       name: "Bread",
       image:
           "https://www.cookingclassy.com/wp-content/uploads/2020/04/bread-recipe-1.jpg",
-      description: "The shit you eat",
+      description: "The food",
       votes: 123,
       adult: false,
     );
@@ -48,7 +48,7 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _thing2 = Thing(
       name: "Mercury Poisoning",
       image:
-          "https://thumbs.dreamstime.com/z/mercury-metal-drops-shiny-droplets-isolated-white-background-66388405.jpg",
+          "https://www.ancient-symbols.com/wp-content/uploads/2019/11/mercury-metal.jpg",
       description: "Kills you",
       votes: 1102,
       adult: false,
