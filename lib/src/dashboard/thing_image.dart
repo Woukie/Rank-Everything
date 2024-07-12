@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:rank_everything/src/dashboard/thing.dart';
 
 class ThingImage extends StatelessWidget {
   const ThingImage({
     super.key,
-    required this.thing,
+    required this.url,
   });
 
-  final Thing thing;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      thing.image,
+      url,
       fit: BoxFit.cover,
       frameBuilder: (
         BuildContext context,
