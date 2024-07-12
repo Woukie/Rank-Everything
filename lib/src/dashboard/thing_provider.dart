@@ -34,7 +34,7 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _expectingThingsFromServer = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
 
     _thing1 = Thing(
       name: "Bread",
