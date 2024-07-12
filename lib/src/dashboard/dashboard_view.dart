@@ -20,7 +20,7 @@ class DashboardView extends StatelessWidget {
       ),
       body: Stack(
         alignment: Alignment.center,
-        fit: StackFit.expand,
+        fit: StackFit.loose,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

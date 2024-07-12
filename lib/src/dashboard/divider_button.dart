@@ -11,39 +11,47 @@ class DividerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     ThingProvider thingProvider = Provider.of<ThingProvider>(context);
 
-    return Row(
-      children: [
-        const Expanded(child: Divider()),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          transitionBuilder: (child, animation) {
-            return SizeTransition(sizeFactor: animation, child: child);
-          },
-          child: switch (thingProvider.gameState) {
-            GameState.idle => FilledButton(
-                key: const Key("Idle"),
-                onPressed: () {
-                  thingProvider.loadNextThings();
-                },
-                child: const Text("Begin!"),
-              ),
-            GameState.starting => Container(),
-            GameState.choosing => FilledButton(
-                key: const Key("Choosing"),
-                onPressed: () {},
-                child: const Text("VS"),
-              ),
-            GameState.chosen => FilledButton(
-                key: const Key("Next"),
-                onPressed: () {
-                  thingProvider.loadNextThings();
-                },
-                child: const Text("Next"),
-              ),
-          },
-        ),
-        const Expanded(child: Divider()),
-      ],
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      switchInCurve: Curves.easeOut,
+      switchOutCurve: Curves.easeIn,
+      transitionBuilder: (child, animation) {
+        return ScaleTransition(
+          scale: animation,
+          child: FadeTransition(opacity: animation, child: child),
+        );
+      },
+      child: switch (thingProvider.gameState) {
+        GameState.idle => FloatingActionButton.extended(
+            key: const Key("Idle"),
+            onPressed: () {
+              thingProvider.loadNextThings();
+            },
+            label: Text(
+              "BEGIN",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+        GameState.starting => Container(),
+        GameState.choosing => FloatingActionButton.extended(
+            key: const Key("Choosing"),
+            onPressed: null,
+            label: Text(
+              "VERSUS",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+        GameState.chosen => FloatingActionButton.extended(
+            key: const Key("Next"),
+            onPressed: () {
+              thingProvider.loadNextThings();
+            },
+            label: Text(
+              "NEXT",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+      },
     );
   }
 }
