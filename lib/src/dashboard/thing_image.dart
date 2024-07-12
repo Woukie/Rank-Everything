@@ -1,47 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:rank_everything/src/dashboard/animated_image.dart';
+import 'package:rank_everything/src/dashboard/thing.dart';
+import 'package:rank_everything/src/dashboard/thing_provider.dart';
 
 class ThingImage extends StatelessWidget {
   const ThingImage({
     super.key,
-    required this.url,
+    required this.thingProvider,
+    required this.top,
+    required this.thing,
+    required this.selected,
   });
 
-  final String url;
+  final ThingProvider thingProvider;
+  final bool top;
+  final Thing? thing;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      url,
-      fit: BoxFit.cover,
-      frameBuilder: (
-        BuildContext context,
-        Widget child,
-        int? frame,
-        bool synchronouslyLoaded,
-      ) =>
-          synchronouslyLoaded
-              ? child
-              : child.animate().fade().scaleXY(
-                    begin: 0.8,
-                    curve: Curves.bounceOut,
-                  ),
-      errorBuilder: (context, error, stackTrace) => const Card(
-        margin: EdgeInsets.zero,
-        child: Icon(Icons.image_not_supported_outlined),
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: switch (thingProvider.gameState) {
+          GameState.idle => Container(),
+          GameState.starting =>
+            const Center(child: CircularProgressIndicator()),
+          GameState.choosing => Transform.scale(
+              scale: 1.1,
+              child: GestureDetector(
+                onTap: () => thingProvider.selectThing(top ? 1 : 2),
+                child: AnimatedImage(url: thing!.image),
+              ),
+            ),
+          GameState.chosen => AnimatedImage(url: thing!.image)
+              .animate()
+              .scaleXY(
+                begin: 1.1,
+                end: selected ? 1.15 : 1.05,
+                curve: Curves.bounceOut,
+              )
+              .blurXY(end: selected ? 0 : 2)
+        },
       ),
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
-
-        return Center(
-          child: CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                    loadingProgress.expectedTotalBytes!
-                : null,
-          ).animate().fadeIn(),
-        );
-      },
     );
   }
 }

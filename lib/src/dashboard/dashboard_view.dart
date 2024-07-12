@@ -18,7 +18,6 @@ class DashboardView extends StatelessWidget {
         fit: StackFit.loose,
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ThingView(top: true),
               ThingView(top: false),
