@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
