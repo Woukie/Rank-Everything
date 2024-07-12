@@ -14,6 +14,7 @@ class ThingImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       thing.image,
+      fit: BoxFit.cover,
       frameBuilder: (
         BuildContext context,
         Widget child,

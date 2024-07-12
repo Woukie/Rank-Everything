@@ -23,6 +23,7 @@ class DashboardView extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ThingView(
                 thing: thingProvider.thing1,

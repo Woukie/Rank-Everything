@@ -27,9 +27,10 @@ class ThingView extends StatelessWidget {
       child: switch (gameState) {
         GameState.idle => Container(),
         GameState.starting => const Center(child: CircularProgressIndicator()),
-        GameState.choosing =>
-          GestureDetector(onTap: onSelect, child: ThingImage(thing: thing!)),
-        GameState.chosen => Container(),
+        _ => GestureDetector(
+            onTap: onSelect,
+            child: ThingImage(thing: thing!),
+          ),
       },
     );
   }
