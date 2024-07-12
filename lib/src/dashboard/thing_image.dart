@@ -21,7 +21,12 @@ class ThingImage extends StatelessWidget {
         int? frame,
         bool synchronouslyLoaded,
       ) =>
-          synchronouslyLoaded ? child : child.animate().fade(),
+          synchronouslyLoaded
+              ? child
+              : child.animate().fade().scaleXY(
+                    begin: 0.8,
+                    curve: Curves.bounceOut,
+                  ),
       errorBuilder: (context, error, stackTrace) => const Card(
         margin: EdgeInsets.zero,
         child: Icon(Icons.image_not_supported_outlined),
