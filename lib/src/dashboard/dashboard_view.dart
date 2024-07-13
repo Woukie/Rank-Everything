@@ -74,37 +74,29 @@ class _DashboardViewState extends State<DashboardView>
       appBar: AppBar(
         title: const Text('Rank Everything'),
       ),
-      body: GestureDetector(
-        onTap: () {
-          if (thingProvider.gameState == GameState.chosen ||
-              thingProvider.gameState == GameState.idle) {
-            thingProvider.loadNextThings();
-          }
+      body: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return Stack(
+            alignment: Alignment.center,
+            fit: StackFit.loose,
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    flex: _flexTop.value,
+                    child: const ThingView(top: true),
+                  ),
+                  Expanded(
+                    flex: _flexBottom.value,
+                    child: const ThingView(top: false),
+                  ),
+                ],
+              ),
+              const DividerButton(),
+            ],
+          );
         },
-        child: AnimatedBuilder(
-          animation: _animationController,
-          builder: (context, child) {
-            return Stack(
-              alignment: Alignment.center,
-              fit: StackFit.loose,
-              children: [
-                Column(
-                  children: [
-                    Expanded(
-                      flex: _flexTop.value,
-                      child: const ThingView(top: true),
-                    ),
-                    Expanded(
-                      flex: _flexBottom.value,
-                      child: const ThingView(top: false),
-                    ),
-                  ],
-                ),
-                const DividerButton(),
-              ],
-            );
-          },
-        ),
       ),
     );
   }

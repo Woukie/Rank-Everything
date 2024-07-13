@@ -29,8 +29,14 @@ class _ThingViewState extends State<ThingView> {
 
     return GestureDetector(
       onTap: () {
-        if (thingProvider.gameState == GameState.choosing) {
-          thingProvider.selectThing(widget.top ? 1 : 2);
+        switch (thingProvider.gameState) {
+          case GameState.choosing:
+            thingProvider.selectThing(widget.top ? 1 : 2);
+            break;
+          case GameState.chosen || GameState.idle:
+            thingProvider.loadNextThings();
+            break;
+          default:
         }
       },
       child: Card(
