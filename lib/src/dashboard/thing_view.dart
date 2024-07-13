@@ -27,28 +27,36 @@ class _ThingViewState extends State<ThingView> {
     Thing? thing = widget.top ? thingProvider.thing1 : thingProvider.thing2;
     bool selected = thingProvider.selectedThing == (widget.top ? 1 : 2);
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(6),
-        child: Stack(
-          alignment: widget.top ? Alignment.bottomCenter : Alignment.topCenter,
-          children: [
-            ThingImage(
-              top: widget.top,
-              thing: thing,
-              selected: selected,
-            ),
-            ThingTick(
-              thing: thing,
-              selected: selected,
-              top: widget.top,
-            ),
-            ThingInfo(
-              thing: thing,
-              padding: thingProvider.gameState != GameState.chosen,
-              top: widget.top,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        if (thingProvider.gameState == GameState.choosing) {
+          thingProvider.selectThing(widget.top ? 1 : 2);
+        }
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: Stack(
+            alignment:
+                widget.top ? Alignment.bottomCenter : Alignment.topCenter,
+            children: [
+              ThingImage(
+                top: widget.top,
+                thing: thing,
+                selected: selected,
+              ),
+              ThingTick(
+                thing: thing,
+                selected: selected,
+                top: widget.top,
+              ),
+              ThingInfo(
+                thing: thing,
+                padding: thingProvider.gameState != GameState.chosen,
+                top: widget.top,
+              ),
+            ],
+          ),
         ),
       ),
     );

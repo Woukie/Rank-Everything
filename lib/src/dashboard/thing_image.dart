@@ -33,17 +33,10 @@ class ThingImage extends StatelessWidget {
           GameState.idle => Container(),
           GameState.starting =>
             const Center(child: CircularProgressIndicator()),
-          GameState.choosing => Transform.scale(
-              scale: 1.1,
-              child: GestureDetector(
-                onTap: () => thingProvider.selectThing(top ? 1 : 2),
-                child: AnimatedImage(url: thing!.image),
-              ),
-            ),
-          GameState.chosen => Transform.scale(
+          _ => Transform.scale(
               scale: 1.1,
               child: AnimatedImage(url: thing!.image),
-            )
+            ),
         },
       ),
     );
