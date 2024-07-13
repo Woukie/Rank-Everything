@@ -7,12 +7,12 @@ class ThingInfo extends StatelessWidget {
   const ThingInfo({
     super.key,
     required this.thing,
-    required this.selected,
     required this.top,
+    required this.padding,
   });
 
   final Thing? thing;
-  final bool selected, top;
+  final bool top, padding;
 
   @override
   Widget build(BuildContext context) {
@@ -44,24 +44,36 @@ class ThingInfo extends StatelessWidget {
                             .surfaceContainer
                             .withAlpha(150),
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            6,
-                            !top ? 24 : 6,
-                            6,
-                            top ? 24 : 6,
-                          ),
+                          padding: const EdgeInsets.all(6),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            verticalDirection: top
+                                ? VerticalDirection.up
+                                : VerticalDirection.down,
                             children: [
-                              Text(
-                                thing!.name,
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium,
+                              AnimatedSize(
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.bounceOut,
+                                child: SizedBox(
+                                    width: 10, height: padding ? 24 : 0),
                               ),
-                              Text(
-                                thing!.description,
-                                style: Theme.of(context).textTheme.titleMedium,
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    thing!.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  ),
+                                  Text(
+                                    thing!.description,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                ],
                               ),
                             ],
                           ),

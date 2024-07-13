@@ -22,22 +22,32 @@ class ThingImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: switch (thingProvider.gameState) {
-        GameState.idle => Container(),
-        GameState.starting => const Center(child: CircularProgressIndicator()),
-        GameState.choosing => Transform.scale(
-            scale: 1.1,
-            child: GestureDetector(
-              onTap: () => thingProvider.selectThing(top ? 1 : 2),
-              child: AnimatedImage(url: thing!.image),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 250),
+        transitionBuilder: (child, animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: switch (thingProvider.gameState) {
+          GameState.idle => Container(),
+          GameState.starting =>
+            const Center(child: CircularProgressIndicator()),
+          GameState.choosing => Transform.scale(
+              scale: 1.1,
+              child: GestureDetector(
+                onTap: () => thingProvider.selectThing(top ? 1 : 2),
+                child: AnimatedImage(url: thing!.image),
+              ),
             ),
-          ),
-        GameState.chosen => AnimatedImage(url: thing!.image).animate().scaleXY(
-              begin: 1.1,
-              end: selected ? 1.15 : 1.05,
-              curve: Curves.bounceOut,
+          GameState.chosen => Transform.scale(
+              scale: 1.1,
+              child: AnimatedImage(url: thing!.image).animate().scaleXY(
+                    begin: 1,
+                    end: selected ? 0.95 : 1.05,
+                    curve: Curves.bounceOut,
+                  ),
             )
-      },
+        },
+      ),
     );
   }
 }

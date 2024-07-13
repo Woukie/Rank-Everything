@@ -33,18 +33,11 @@ class _ThingViewState extends State<ThingView> {
         child: Stack(
           alignment: widget.top ? Alignment.bottomCenter : Alignment.topCenter,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: ThingImage(
-                    thingProvider: thingProvider,
-                    top: widget.top,
-                    thing: thing,
-                    selected: selected,
-                  ),
-                ),
-              ],
+            ThingImage(
+              thingProvider: thingProvider,
+              top: widget.top,
+              thing: thing,
+              selected: selected,
             ),
             ThingTick(
               thing: thing,
@@ -53,7 +46,7 @@ class _ThingViewState extends State<ThingView> {
             ),
             ThingInfo(
               thing: thing,
-              selected: selected,
+              padding: thingProvider.gameState != GameState.chosen,
               top: widget.top,
             ),
           ],

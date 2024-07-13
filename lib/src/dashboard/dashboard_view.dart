@@ -23,7 +23,7 @@ class _DashboardViewState extends State<DashboardView>
     super.initState();
 
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 400),
       vsync: this,
     );
 
