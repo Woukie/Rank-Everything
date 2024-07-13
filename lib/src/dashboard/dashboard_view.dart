@@ -23,7 +23,7 @@ class _DashboardViewState extends State<DashboardView>
     super.initState();
 
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 250),
       vsync: this,
     );
 
@@ -33,7 +33,7 @@ class _DashboardViewState extends State<DashboardView>
     ).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.0, 0.5, curve: Curves.fastEaseInToSlowEaseOut),
+        curve: const Interval(0.0, 0.5, curve: Curves.easeInOut),
       ),
     );
 
@@ -43,7 +43,7 @@ class _DashboardViewState extends State<DashboardView>
     ).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.5, 1.0, curve: Curves.fastEaseInToSlowEaseOut),
+        curve: const Interval(0.5, 1.0, curve: Curves.easeInOut),
       ),
     );
     _animationController.animateTo(0.5);

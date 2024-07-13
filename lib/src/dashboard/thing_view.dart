@@ -34,7 +34,6 @@ class _ThingViewState extends State<ThingView> {
           alignment: widget.top ? Alignment.bottomCenter : Alignment.topCenter,
           children: [
             ThingImage(
-              thingProvider: thingProvider,
               top: widget.top,
               thing: thing,
               selected: selected,

@@ -17,7 +17,7 @@ class ThingInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 250),
       switchInCurve: Curves.easeInOut,
       switchOutCurve: Curves.easeInOut,
       transitionBuilder: (child, animation) {
@@ -54,7 +54,7 @@ class ThingInfo extends StatelessWidget {
                             children: [
                               AnimatedSize(
                                 duration: const Duration(milliseconds: 250),
-                                curve: Curves.bounceOut,
+                                curve: Curves.easeInOut,
                                 child: SizedBox(
                                     width: 10, height: padding ? 24 : 0),
                               ),
