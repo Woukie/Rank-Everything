@@ -18,31 +18,24 @@ class ThingInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     if (thing == null) return Container();
 
-    return Padding(
-      padding: const EdgeInsets.all(6),
-      child: Column(
-        children: [
-          Builder(builder: (context) {
-            double percentageAgree = thing!.votes /
-                (thingProvider.thing1!.votes + thingProvider.thing2!.votes);
-
-            if (selected) {
-              return Column(
-                children: [
-                  LinearProgressIndicator(
-                    minHeight: 24,
-                    borderRadius: BorderRadius.circular(12),
-                    value: percentageAgree,
-                  ),
-                  Text(
-                      "${(percentageAgree * 100).toInt()}% of people agree with you")
-                ],
-              );
-            }
-
-            return Container();
-          }),
-        ],
+    return Card(
+      margin: EdgeInsets.zero,
+      color: Theme.of(context).colorScheme.surfaceContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              thing!.name,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              thing!.description,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
+        ),
       ),
     );
   }

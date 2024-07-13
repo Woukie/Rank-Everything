@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
+import 'package:rank_everything/src/dashboard/thing_info.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
 
 import 'thing_image.dart';
-import 'thing_info.dart';
 
 class ThingView extends StatelessWidget {
   const ThingView({
@@ -30,20 +30,21 @@ class ThingView extends StatelessWidget {
             verticalDirection:
                 top ? VerticalDirection.down : VerticalDirection.up,
             children: [
-              ThingImage(
-                thingProvider: thingProvider,
-                top: top,
-                thing: thing,
-                selected: selected,
+              Expanded(
+                child: ThingImage(
+                  thingProvider: thingProvider,
+                  top: top,
+                  thing: thing,
+                  selected: selected,
+                ),
               ),
+              const Padding(padding: EdgeInsets.only(top: 6)),
               ThingInfo(
                 thing: thing,
                 thingProvider: thingProvider,
                 selected: selected,
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 18),
-              ),
+              const Padding(padding: EdgeInsets.only(top: 24)),
             ],
           ),
         ),
