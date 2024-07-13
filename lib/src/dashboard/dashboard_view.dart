@@ -1,30 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rank_everything/src/dashboard/thing_provider.dart';
 import 'divider_button.dart';
 import 'thing_view.dart';
 
-class DashboardView extends StatelessWidget {
+class DashboardView extends StatefulWidget {
   const DashboardView({
     super.key,
   });
 
   @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late final Animation<int> _flexTop, _flexBottom;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _flexTop = IntTween(
+      begin: 150000,
+      end: 75000,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.5, curve: Curves.fastEaseInToSlowEaseOut),
+      ),
+    );
+
+    _flexBottom = IntTween(
+      begin: 75000,
+      end: 150000,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.5, 1.0, curve: Curves.fastEaseInToSlowEaseOut),
+      ),
+    );
+    _animationController.animateTo(0.5);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ThingProvider thingProvider = Provider.of<ThingProvider>(context);
+
+    switch (thingProvider.selectedThing) {
+      case 0:
+        _animationController.animateTo(0.5);
+      case 1:
+        _animationController.animateTo(0.0);
+      case 2:
+        _animationController.animateTo(1.0);
+        break;
+      default:
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rank Everything'),
       ),
-      body: const Stack(
-        alignment: Alignment.center,
-        fit: StackFit.loose,
-        children: [
-          Column(
-            children: [
-              ThingView(top: true),
-              ThingView(top: false),
-            ],
-          ),
-          DividerButton(),
-        ],
+      body: GestureDetector(
+        onTap: () {
+          if (thingProvider.gameState == GameState.chosen ||
+              thingProvider.gameState == GameState.idle) {
+            thingProvider.loadNextThings();
+          }
+        },
+        child: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            return Stack(
+              alignment: Alignment.center,
+              fit: StackFit.loose,
+              children: [
+                Column(
+                  children: [
+                    Expanded(
+                      flex: _flexTop.value,
+                      child: const ThingView(top: true),
+                    ),
+                    Expanded(
+                      flex: _flexBottom.value,
+                      child: const ThingView(top: false),
+                    ),
+                  ],
+                ),
+                const DividerButton(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

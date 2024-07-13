@@ -24,33 +24,33 @@ class DividerButton extends StatelessWidget {
       child: switch (thingProvider.gameState) {
         GameState.idle => FloatingActionButton.extended(
             key: const Key("Idle"),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
             onPressed: () {
               thingProvider.loadNextThings();
             },
             label: Text(
               "BEGIN",
-              style: Theme.of(context).textTheme.displayMedium,
+              style: Theme.of(context)
+                  .textTheme
+                  .displayMedium
+                  ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
             ),
           ),
-        GameState.starting => Container(),
         GameState.choosing => FloatingActionButton.extended(
             key: const Key("Choosing"),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
             onPressed: null,
             label: Text(
-              "VERSUS",
-              style: Theme.of(context).textTheme.displayMedium,
+              "VS",
+              style: Theme.of(context)
+                  .textTheme
+                  .displayMedium
+                  ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
             ),
           ),
-        GameState.chosen => FloatingActionButton.extended(
-            key: const Key("Next"),
-            onPressed: () {
-              thingProvider.loadNextThings();
-            },
-            label: Text(
-              "NEXT",
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
+        _ => Container(),
       },
     );
   }

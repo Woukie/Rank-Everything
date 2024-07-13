@@ -32,14 +32,11 @@ class ThingImage extends StatelessWidget {
               child: AnimatedImage(url: thing!.image),
             ),
           ),
-        GameState.chosen => AnimatedImage(url: thing!.image)
-            .animate()
-            .scaleXY(
+        GameState.chosen => AnimatedImage(url: thing!.image).animate().scaleXY(
               begin: 1.1,
               end: selected ? 1.15 : 1.05,
               curve: Curves.bounceOut,
             )
-            .blurXY(end: selected ? 0 : 2)
       },
     );
   }
