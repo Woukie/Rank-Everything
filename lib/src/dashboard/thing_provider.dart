@@ -37,8 +37,9 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
     await Future.delayed(const Duration(seconds: 1));
 
     _thing1 = Thing(
+      id: 0,
       name: "Bread",
-      image:
+      imageUrl:
           "https://www.cookingclassy.com/wp-content/uploads/2020/04/bread-recipe-1.jpg",
       description: "The food",
       votes: 123,
@@ -46,8 +47,9 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
     );
 
     _thing2 = Thing(
+      id: 1,
       name: "Mercury Poisoning",
-      image:
+      imageUrl:
           "https://www.ancient-symbols.com/wp-content/uploads/2019/11/mercury-metal.jpg",
       description: "Kills you",
       votes: 1102,

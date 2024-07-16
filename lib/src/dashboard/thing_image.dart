@@ -35,7 +35,7 @@ class ThingImage extends StatelessWidget {
             const Center(child: CircularProgressIndicator()),
           _ => Transform.scale(
               scale: 1.1,
-              child: AnimatedImage(url: thing!.image),
+              child: AnimatedImage(url: thing!.imageUrl),
             ),
         },
       ),
