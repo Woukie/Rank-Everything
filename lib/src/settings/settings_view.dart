@@ -17,7 +17,7 @@ class SettingsView extends StatelessWidget {
         title: const Text('Settings'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -39,32 +39,29 @@ class _ThingViewState extends State<ThingView> {
           default:
         }
       },
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: Stack(
-            alignment:
-                widget.top ? Alignment.bottomCenter : Alignment.topCenter,
-            children: [
-              ThingImage(
-                top: widget.top,
-                thing: thing,
-                selected: selected,
-              ),
-              ThingResults(
-                widget: widget,
-                thingProvider: thingProvider,
-                thing: thing,
-                selected: selected,
-                top: widget.top,
-              ),
-              ThingInfo(
-                thing: thing,
-                padding: thingProvider.gameState != GameState.chosen,
-                top: widget.top,
-              ),
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(6),
+        child: Stack(
+          alignment: widget.top ? Alignment.bottomCenter : Alignment.topCenter,
+          children: [
+            ThingImage(
+              top: widget.top,
+              thing: thing,
+              selected: selected,
+            ),
+            ThingResults(
+              widget: widget,
+              thingProvider: thingProvider,
+              thing: thing,
+              selected: selected,
+              top: widget.top,
+            ),
+            ThingInfo(
+              thing: thing,
+              padding: thingProvider.gameState != GameState.chosen,
+              top: widget.top,
+            ),
+          ],
         ),
       ),
     );
