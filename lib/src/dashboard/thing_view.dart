@@ -56,6 +56,7 @@ class _ThingViewState extends State<ThingView> {
                 thingProvider: thingProvider,
                 thing: thing,
                 selected: selected,
+                top: widget.top,
               ),
               ThingInfo(
                 thing: thing,

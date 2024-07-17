@@ -11,31 +11,33 @@ class ThingResults extends StatelessWidget {
     required this.thingProvider,
     required this.thing,
     required this.selected,
+    required this.top,
   });
 
   final ThingView widget;
   final ThingProvider thingProvider;
   final Thing? thing;
-  final bool selected;
+  final bool selected, top;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 250),
-      switchInCurve: Curves.easeInOut,
-      switchOutCurve: Curves.easeInOut,
-      transitionBuilder: (child, animation) {
-        return ScaleTransition(
-            scale: animation,
-            child: FadeTransition(
-              opacity: animation,
-              child: child,
-            ));
-      },
-      child: !selected
-          ? const SizedBox(height: 1, width: 1)
-          : Center(
-              child: Padding(
+    return Align(
+      alignment: top ? Alignment.topCenter : Alignment.bottomCenter,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 250),
+        switchInCurve: Curves.easeInOut,
+        switchOutCurve: Curves.easeInOut,
+        transitionBuilder: (child, animation) {
+          return ScaleTransition(
+              scale: animation,
+              child: FadeTransition(
+                opacity: animation,
+                child: child,
+              ));
+        },
+        child: !selected
+            ? const SizedBox(height: 1, width: 1)
+            : Padding(
                 padding: const EdgeInsets.all(6),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
@@ -108,7 +110,7 @@ class ThingResults extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+      ),
     );
   }
 }
