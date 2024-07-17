@@ -46,7 +46,7 @@ class _DashboardViewState extends State<DashboardView>
         curve: const Interval(0.5, 1.0, curve: Curves.easeInOut),
       ),
     );
-    _animationController.animateTo(0.5);
+    _animationController.value = 0.5;
   }
 
   @override
