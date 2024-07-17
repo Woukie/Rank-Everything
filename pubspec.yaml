@@ -19,6 +19,7 @@ dependencies:
 
   flutter_gen: any
   flutter_animate: ^4.5.0
+  http: ^1.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

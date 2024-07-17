@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
+import 'package:http/http.dart' as http;
 
 enum GameState { idle, starting, choosing, chosen }
 
@@ -34,27 +37,15 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _expectingThingsFromServer = true;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 250));
 
-    _thing1 = Thing(
-      id: 0,
-      name: "Bread",
-      imageUrl:
-          "https://www.cookingclassy.com/wp-content/uploads/2020/04/bread-recipe-1.jpg",
-      description: "The food",
-      votes: 123,
-      adult: false,
-    );
+    http.Response response =
+        await http.get(Uri.parse('https://rank.woukie.net/get_comparison'));
 
-    _thing2 = Thing(
-      id: 1,
-      name: "Mercury Poisoning",
-      imageUrl:
-          "https://www.ancient-symbols.com/wp-content/uploads/2019/11/mercury-metal.jpg",
-      description: "Kills you",
-      votes: 1102,
-      adult: false,
-    );
+    dynamic body = jsonDecode(response.body);
+
+    _thing1 = Thing.parse(body[0]);
+    _thing2 = Thing.parse(body[1]);
 
     _expectingThingsFromServer = false;
 
