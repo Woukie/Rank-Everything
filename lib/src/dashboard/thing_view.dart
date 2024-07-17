@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
@@ -5,6 +7,7 @@ import 'package:rank_everything/src/dashboard/thing_info.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
 
 import 'thing_image.dart';
+import 'thing_results.dart';
 import 'thing_tick.dart';
 
 class ThingView extends StatefulWidget {
@@ -55,6 +58,12 @@ class _ThingViewState extends State<ThingView> {
                 thing: thing,
                 selected: selected,
                 top: widget.top,
+              ),
+              ThingResults(
+                widget: widget,
+                thingProvider: thingProvider,
+                thing: thing,
+                selected: selected,
               ),
               ThingInfo(
                 thing: thing,
