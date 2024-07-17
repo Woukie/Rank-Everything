@@ -53,7 +53,7 @@ class ThingInfo extends StatelessWidget {
                                 : VerticalDirection.down,
                             children: [
                               AnimatedSize(
-                                duration: const Duration(milliseconds: 250),
+                                duration: const Duration(milliseconds: 120),
                                 curve: Curves.easeInOut,
                                 child: SizedBox(
                                     width: 10, height: padding ? 24 : 0),
