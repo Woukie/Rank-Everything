@@ -54,7 +54,13 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<void> selectThing(int thing) async {
     _selectedThing = thing;
+
     notifyListeners();
+
+    await http.post(
+      Uri.parse('https://rank.woukie.net/submit_vote'),
+      body: (_selectedThing == 1 ? _thing1!.id : _thing2!.id).toString(),
+    );
   }
 
   @override
