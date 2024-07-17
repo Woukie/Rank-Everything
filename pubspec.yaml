@@ -28,15 +28,17 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
   image_path: "assets/icon.png"
+  android: true
+  ios: true
   min_sdk_android: 21
+  adaptive_icon_background: "#303030"
+  adaptive_icon_foreground: "assets/icon_android.png"
   web:
     generate: true
     image_path: "assets/icon.png"
-    background_color: "#FFDDDD"
-    theme_color: "#FFBBDD"
+    background_color: "#303030"
+    theme_color: "#FFFFFF"
   windows:
     generate: true
     image_path: "assets/icon.png"
