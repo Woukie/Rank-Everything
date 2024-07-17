@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:rank_everything/src/settings/settings_provider.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
+import 'setting_item.dart';
+
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
@@ -19,53 +21,94 @@ class SettingsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DropdownButton<ThemeMode>(
-              value: settingsProvider.theme,
-              onChanged: settingsProvider.setTheme,
-              items: const [
-                DropdownMenuItem(
-                  value: ThemeMode.system,
-                  child: Text('System Theme'),
-                ),
-                DropdownMenuItem(
-                  value: ThemeMode.light,
-                  child: Text('Light Theme'),
-                ),
-                DropdownMenuItem(
-                  value: ThemeMode.dark,
-                  child: Text('Dark Theme'),
-                )
-              ],
+            SettingItem(
+              title: "Theme",
+              body: "Change the app theme",
+              child: DropdownButton<ThemeMode>(
+                value: settingsProvider.theme,
+                onChanged: settingsProvider.setTheme,
+                items: const [
+                  DropdownMenuItem(
+                    value: ThemeMode.system,
+                    child: Text('System'),
+                  ),
+                  DropdownMenuItem(
+                    value: ThemeMode.light,
+                    child: Text('Light'),
+                  ),
+                  DropdownMenuItem(
+                    value: ThemeMode.dark,
+                    child: Text('Dark'),
+                  )
+                ],
+              ),
             ),
-            DropdownButton<NsfwMode>(
-              value: settingsProvider.nsfw,
-              onChanged: settingsProvider.setNsfw,
-              items: const [
-                DropdownMenuItem(
-                  value: NsfwMode.shown,
-                  child: Text('Shown'),
-                ),
-                DropdownMenuItem(
-                  value: NsfwMode.blurred,
-                  child: Text('Blurred'),
-                ),
-                DropdownMenuItem(
-                  value: NsfwMode.hidden,
-                  child: Text('Hidden'),
-                )
-              ],
+            SettingItem(
+              title: "Content Filtering",
+              body: "Change how adult content is filtered",
+              child: DropdownButton<NsfwMode>(
+                value: settingsProvider.nsfw,
+                onChanged: settingsProvider.setNsfw,
+                items: const [
+                  DropdownMenuItem(
+                    value: NsfwMode.shown,
+                    child: Text('Shown'),
+                  ),
+                  DropdownMenuItem(
+                    value: NsfwMode.blurred,
+                    child: Text('Blurred'),
+                  ),
+                  DropdownMenuItem(
+                    value: NsfwMode.hidden,
+                    child: Text('Hidden'),
+                  )
+                ],
+              ),
             ),
-            Switch(
-              value: settingsProvider.useSystemColor,
-              onChanged: settingsProvider.setUseSystemColor,
+            SettingItem(
+              title: "System Color",
+              body: "Use your devices color theme",
+              child: Switch(
+                value: settingsProvider.useSystemColor,
+                onChanged: settingsProvider.setUseSystemColor,
+              ),
             ),
             settingsProvider.useSystemColor
                 ? Container()
-                : MaterialColorPicker(
-                    onColorChange: (Color color) {
-                      settingsProvider.setColor(color);
+                : GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(6),
+                                    child: MaterialColorPicker(
+                                      onColorChange: (Color color) {
+                                        settingsProvider.setColor(color);
+                                      },
+                                      selectedColor: settingsProvider.color,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     },
-                    selectedColor: settingsProvider.color,
+                    child: SettingItem(
+                      title: "App Color",
+                      body: "Choose a custom color for the app",
+                      child: CircleColor(
+                        color: settingsProvider.color,
+                        circleSize: 40,
+                      ),
+                    ),
                   )
           ],
         ),
