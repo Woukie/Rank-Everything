@@ -50,8 +50,6 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _expectingThingsFromServer = false;
 
     notifyListeners();
-
-    // TODO: some code...
   }
 
   Future<void> selectThing(int thing) async {
