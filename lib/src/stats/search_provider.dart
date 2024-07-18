@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
+import 'package:http/http.dart' as http;
 
 class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
   final List<Thing> _searchResults = List.empty(growable: true);
@@ -23,19 +26,21 @@ class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
       () async {
         await Future.delayed(const Duration(milliseconds: 700));
 
-        // TODO: Return list of things from server
+        http.Response response = await http.post(
+          Uri.parse('https://rank.woukie.net/search'),
+          body: {"search": query, "ascending": true},
+        );
 
-        return List.empty();
+        Map<String, dynamic> body = jsonDecode(response.body);
+
+        return body.values.map((value) => Thing.parse(value)).toList();
       }(),
-      onCancel: () {
-        debugPrint('Cancelled old search');
-        notifyListeners();
-      },
     );
 
     _fetchSearch?.then(
       (things) {
         print(things);
+        notifyListeners();
       },
     );
   }
