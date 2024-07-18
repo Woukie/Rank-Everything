@@ -22,6 +22,7 @@ class _StatsViewState extends State<StatsView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Stats'),
+        forceMaterialTransparency: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(6),
