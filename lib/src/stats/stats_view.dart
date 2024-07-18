@@ -73,8 +73,18 @@ class _StatsViewState extends State<StatsView> {
                   Thing thing = searchProvider.searchResults[index];
 
                   return ListTile(
-                    title: Text(thing.name),
-                    leading: Text(thing.votes.toString()),
+                    titleAlignment: ListTileTitleAlignment.center,
+                    title: Text(
+                      thing.name,
+                    ),
+                    leading: Text(
+                      (index + 1).toString(),
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    trailing: Text(
+                      thing.votes.toString(),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     key: Key(index.toString()),
                   );
                 },
