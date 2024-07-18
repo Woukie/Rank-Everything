@@ -14,12 +14,12 @@ class Thing {
 
   static Thing parse(dynamic thing) {
     return Thing(
-      id: int.parse(thing['id']),
+      id: thing['id'],
       name: thing['name'],
       imageUrl: thing['image_url'],
       description: thing['description'],
-      votes: int.parse(thing['votes']),
-      adult: int.parse(thing['adult']) != 0,
+      votes: thing['votes'],
+      adult: thing['adult'] != 0,
     );
   }
 }

@@ -6,42 +6,40 @@ import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:http/http.dart' as http;
 
 class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
-  final List<Thing> _searchResults = List.empty(growable: true);
+  List<Thing> _searchResults = List.empty(growable: true);
   String _oldQuery = "";
 
   List<Thing> get searchResults => _searchResults;
-  bool get loadingResults => _fetchSearch != null;
+  bool get loadingResults => _searchOperation != null;
 
-  CancelableOperation? _fetchSearch;
+  CancelableOperation? _searchOperation;
+
+  SearchProvider() {
+    search("");
+  }
 
   Future<void> search(String query) async {
     if (query == _oldQuery) return;
     _oldQuery = query;
 
     if (loadingResults) {
-      _fetchSearch!.cancel();
+      _searchOperation?.cancel();
     }
 
-    _fetchSearch = CancelableOperation.fromFuture(
-      () async {
-        await Future.delayed(const Duration(milliseconds: 700));
+    // Prevents old and out-of-order searches from coming through and setting the search results
+    _searchOperation = CancelableOperation.fromFuture(() async {
+      http.Response response = await http.post(
+        Uri.parse('https://rank.woukie.net/search'),
+        body: jsonEncode({"query": query, "ascending": "false"}),
+      );
 
-        http.Response response = await http.post(
-          Uri.parse('https://rank.woukie.net/search'),
-          body: {"search": query, "ascending": true},
-        );
+      List<dynamic> body = jsonDecode(response.body);
+      return body.map((value) => Thing.parse(value)).toList();
+    }());
 
-        Map<String, dynamic> body = jsonDecode(response.body);
-
-        return body.values.map((value) => Thing.parse(value)).toList();
-      }(),
-    );
-
-    _fetchSearch?.then(
-      (things) {
-        print(things);
-        notifyListeners();
-      },
-    );
+    _searchOperation?.then((things) {
+      _searchResults = things;
+      notifyListeners();
+    });
   }
 }
