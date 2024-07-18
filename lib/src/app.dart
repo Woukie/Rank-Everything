@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/dashboard_view.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
 import 'package:rank_everything/src/settings/settings_provider.dart';
+import 'package:rank_everything/src/stats/search_provider.dart';
 import 'package:rank_everything/src/stats/stats_view.dart';
 
 import 'settings/settings_view.dart';
@@ -22,6 +23,7 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => settingsProvider),
         ChangeNotifierProvider(create: (_) => ThingProvider()),
+        ChangeNotifierProvider(create: (_) => SearchProvider()),
       ],
       child: Builder(builder: (context) {
         SettingsProvider settingsProvider =
