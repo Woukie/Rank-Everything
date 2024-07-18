@@ -7,15 +7,22 @@ import 'package:http/http.dart' as http;
 
 class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
   List<Thing> _searchResults = List.empty(growable: true);
+  bool _ascending = false;
   String _oldQuery = "";
 
   List<Thing> get searchResults => _searchResults;
   bool get loadingResults => _searchOperation != null;
+  bool get ascending => _ascending;
 
   CancelableOperation? _searchOperation;
 
   SearchProvider() {
     search("", override: true);
+  }
+
+  void setAscending(bool value) {
+    _ascending = value;
+    notifyListeners();
   }
 
   Future<void> search(String query, {bool override = false}) async {
@@ -30,7 +37,7 @@ class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _searchOperation = CancelableOperation.fromFuture(() async {
       http.Response response = await http.post(
         Uri.parse('https://rank.woukie.net/search'),
-        body: jsonEncode({"query": query, "ascending": "false"}),
+        body: jsonEncode({"query": query, "ascending": _ascending.toString()}),
       );
 
       List<dynamic> body = jsonDecode(response.body);
