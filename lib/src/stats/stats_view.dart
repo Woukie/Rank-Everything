@@ -66,6 +66,25 @@ class _StatsViewState extends State<StatsView> {
                 )
               ],
             ),
+            Row(
+              children: [
+                const Text("See the top 10 "),
+                DropdownButton(
+                  items: const [
+                    DropdownMenuItem(
+                      value: false,
+                      child: Text("Best"),
+                    ),
+                    DropdownMenuItem(
+                      value: false,
+                      child: Text("Worst"),
+                    )
+                  ],
+                  onChanged: (value) {},
+                ),
+                const Text(" things!"),
+              ],
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: searchProvider.searchResults.length,
