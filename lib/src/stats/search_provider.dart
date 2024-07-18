@@ -15,11 +15,11 @@ class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
   CancelableOperation? _searchOperation;
 
   SearchProvider() {
-    search("");
+    search("", override: true);
   }
 
-  Future<void> search(String query) async {
-    if (query == _oldQuery) return;
+  Future<void> search(String query, {bool override = false}) async {
+    if (query == _oldQuery && !override) return;
     _oldQuery = query;
 
     if (loadingResults) {
@@ -41,5 +41,9 @@ class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
       _searchResults = things;
       notifyListeners();
     });
+  }
+
+  void refresh() {
+    search(_oldQuery, override: true);
   }
 }
