@@ -1,26 +1,24 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
-import 'package:rank_everything/src/dashboard/thing_view.dart';
 
 class ThingResults extends StatelessWidget {
   const ThingResults({
     super.key,
-    required this.widget,
-    required this.thingProvider,
     required this.thing,
     required this.selected,
     required this.top,
   });
 
-  final ThingView widget;
-  final ThingProvider thingProvider;
   final Thing? thing;
   final bool selected, top;
 
   @override
   Widget build(BuildContext context) {
+    ThingProvider thingProvider = Provider.of<ThingProvider>(context);
+
     return Align(
       alignment: top ? Alignment.topCenter : Alignment.bottomCenter,
       child: AnimatedSwitcher(
@@ -52,7 +50,7 @@ class ThingResults extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(6),
                         child: Builder(builder: (context) {
-                          Thing? otherthing = !widget.top
+                          Thing? otherthing = !top
                               ? thingProvider.thing1
                               : thingProvider.thing2;
 

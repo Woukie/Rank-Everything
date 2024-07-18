@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
 import 'divider_button.dart';
-import 'thing_view.dart';
+import 'thing_view/thing_view.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({

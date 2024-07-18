@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
-import 'package:rank_everything/src/dashboard/thing_info.dart';
+import 'package:rank_everything/src/dashboard/thing_view/thing_info.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
 
 import 'thing_image.dart';
@@ -45,21 +45,19 @@ class _ThingViewState extends State<ThingView> {
           alignment: widget.top ? Alignment.bottomCenter : Alignment.topCenter,
           children: [
             ThingImage(
-              top: widget.top,
               thing: thing,
+              top: widget.top,
               selected: selected,
             ),
             ThingResults(
-              widget: widget,
-              thingProvider: thingProvider,
               thing: thing,
-              selected: selected,
               top: widget.top,
+              selected: selected,
             ),
             ThingInfo(
               thing: thing,
-              padding: thingProvider.gameState != GameState.chosen,
               top: widget.top,
+              padding: thingProvider.gameState != GameState.chosen,
             ),
           ],
         ),

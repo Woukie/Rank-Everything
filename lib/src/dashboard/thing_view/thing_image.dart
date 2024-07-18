@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rank_everything/src/dashboard/animated_image.dart';
+import 'package:rank_everything/src/widgets/animated_image.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
 
