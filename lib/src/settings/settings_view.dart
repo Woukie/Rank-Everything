@@ -48,7 +48,9 @@ class SettingsView extends StatelessWidget {
               body: "Change how adult content is filtered",
               child: DropdownButton<NsfwMode>(
                 value: settingsProvider.nsfw,
-                onChanged: settingsProvider.setNsfw,
+                onChanged: (value) {
+                  settingsProvider.setNsfw(context, value);
+                },
                 items: const [
                   DropdownMenuItem(
                     value: NsfwMode.shown,

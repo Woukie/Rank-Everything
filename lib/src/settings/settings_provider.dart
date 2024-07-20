@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rank_everything/src/dashboard/thing_provider.dart';
+import 'package:rank_everything/src/stats/search_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_theme/system_theme.dart';
 
@@ -22,11 +25,14 @@ class SettingsProvider with ChangeNotifier, DiagnosticableTreeMixin {
   Color get color => _color;
   Color get systemColor => _systemColor;
 
-  Future<void> setNsfw(NsfwMode? nsfw) async {
+  Future<void> setNsfw(BuildContext context, NsfwMode? nsfw) async {
     if (nsfw == null) return;
 
     _nsfw = nsfw;
     notifyListeners();
+
+    Provider.of<ThingProvider>(context, listen: false).loadNextThings();
+    Provider.of<SearchProvider>(context, listen: false).refresh();
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("nsfw", nsfw.name);

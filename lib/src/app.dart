@@ -22,8 +22,8 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => settingsProvider),
-        ChangeNotifierProvider(create: (_) => ThingProvider()),
-        ChangeNotifierProvider(create: (_) => SearchProvider()),
+        ChangeNotifierProvider(create: (_) => SearchProvider(settingsProvider)),
+        ChangeNotifierProvider(create: (_) => ThingProvider(settingsProvider)),
       ],
       child: Builder(builder: (context) {
         SettingsProvider settingsProvider =

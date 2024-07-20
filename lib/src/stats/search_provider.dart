@@ -4,8 +4,11 @@ import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:http/http.dart' as http;
+import 'package:rank_everything/src/settings/settings_provider.dart';
 
 class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
+  late final SettingsProvider _settingsProvider;
+
   List<Thing> _searchResults = List.empty(growable: true);
   bool _ascending = false;
   String _oldQuery = "";
@@ -16,7 +19,8 @@ class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   CancelableOperation? _searchOperation;
 
-  SearchProvider() {
+  SearchProvider(SettingsProvider settingsProvider) {
+    _settingsProvider = settingsProvider;
     search("", override: true);
   }
 
@@ -37,7 +41,11 @@ class SearchProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _searchOperation = CancelableOperation.fromFuture(() async {
       http.Response response = await http.post(
         Uri.parse('https://rank.woukie.net/search'),
-        body: jsonEncode({"query": query, "ascending": _ascending.toString()}),
+        body: jsonEncode({
+          "query": query,
+          "ascending": _ascending.toString(),
+          "adult": _settingsProvider.nsfw != NsfwMode.hidden
+        }),
       );
 
       List<dynamic> body = jsonDecode(response.body);

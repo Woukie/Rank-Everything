@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rank_everything/src/settings/settings_provider.dart';
 import 'package:rank_everything/src/widgets/animated_image.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
@@ -19,6 +22,7 @@ class ThingImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThingProvider thingProvider = Provider.of<ThingProvider>(context);
+    SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
@@ -35,7 +39,20 @@ class ThingImage extends StatelessWidget {
             const Center(child: CircularProgressIndicator()),
           _ => Transform.scale(
               scale: 1.1,
-              child: AnimatedImage(url: thing!.imageUrl),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  AnimatedImage(url: thing!.imageUrl),
+                  settingsProvider.nsfw == NsfwMode.blurred && thing!.adult
+                      ? BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                          child: Container(
+                            alignment: Alignment.center,
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
             ),
         },
       ),

@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:http/http.dart' as http;
+import 'package:rank_everything/src/settings/settings_provider.dart';
 
 enum GameState { idle, starting, choosing, chosen }
 
 class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
+  late final SettingsProvider _settingsProvider;
+
   int _selectedThing = 0;
   bool _expectingThingsFromServer = false;
   Thing? _thing1, _thing2;
@@ -27,6 +30,10 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
   /// Currently chosen thing, 0 corresponding to unselected
   int get selectedThing => _selectedThing;
 
+  ThingProvider(SettingsProvider settingsProvider) {
+    _settingsProvider = settingsProvider;
+  }
+
   /// Resets things and selection, then fetches the next two things
   Future<void> loadNextThings() async {
     if (_expectingThingsFromServer) return;
@@ -39,8 +46,8 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
     await Future.delayed(const Duration(milliseconds: 250));
 
-    http.Response response =
-        await http.get(Uri.parse('https://rank.woukie.net/get_comparison'));
+    http.Response response = await http.get(Uri.parse(
+        'https://rank.woukie.net/get_comparison/${_settingsProvider.nsfw != NsfwMode.hidden}'));
 
     dynamic body = jsonDecode(response.body);
 
