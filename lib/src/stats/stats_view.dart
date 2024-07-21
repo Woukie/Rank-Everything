@@ -139,7 +139,7 @@ class _StatsViewState extends State<StatsView> {
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     trailing: Text(
-                      thing.votes.toString(),
+                      thing.getPercentage().toString(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     key: Key(index.toString()),

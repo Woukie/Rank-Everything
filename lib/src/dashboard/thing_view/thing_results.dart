@@ -54,11 +54,16 @@ class ThingResults extends StatelessWidget {
                               ? thingProvider.thing1
                               : thingProvider.thing2;
 
-                          int totalVotes = otherthing!.votes + thing!.votes;
+                          num totalLikability = otherthing!.getPercentage() +
+                              thing!.getPercentage();
                           var bigText = Theme.of(context)
                               .textTheme
                               .titleLarge
                               ?.copyWith(fontWeight: FontWeight.bold);
+
+                          double likeability = totalLikability == 0
+                              ? 0
+                              : thing!.getPercentage() / totalLikability;
 
                           return Column(
                             mainAxisSize: MainAxisSize.min,
@@ -66,7 +71,7 @@ class ThingResults extends StatelessWidget {
                               LinearProgressIndicator(
                                 borderRadius: BorderRadius.circular(12),
                                 minHeight: 24,
-                                value: thing!.votes / totalVotes,
+                                value: likeability,
                               ),
                               const Padding(padding: EdgeInsets.only(top: 6)),
                               RichText(
@@ -75,8 +80,7 @@ class ThingResults extends StatelessWidget {
                                       Theme.of(context).textTheme.titleMedium,
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text:
-                                          "${(thing!.votes / totalVotes * 100).toInt()}%",
+                                      text: "${(likeability * 100).toInt()}%",
                                       style: bigText,
                                     ),
                                     const TextSpan(

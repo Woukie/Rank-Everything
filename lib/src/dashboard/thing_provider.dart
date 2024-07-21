@@ -59,15 +59,26 @@ class ThingProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
+  /// Takes either 1 or 2, corresponding to either the first or second thing
   Future<void> selectThing(int thing) async {
     _selectedThing = thing;
 
     notifyListeners();
 
+    bool top = _selectedThing == 1;
+
+    int likeId = top ? _thing1!.id : _thing2!.id;
+    int dislikeId = top ? _thing2!.id : _thing1!.id;
+
     await http.post(
       Uri.parse('https://rank.woukie.net/submit_vote'),
-      body: (_selectedThing == 1 ? _thing1!.id : _thing2!.id).toString(),
+      body: jsonEncode(
+          {"like": likeId.toString(), "dislike": dislikeId.toString()}),
     );
+  }
+
+  Thing? getThingFromID(int id) {
+    return id == 1 ? _thing1 : _thing2;
   }
 
   @override

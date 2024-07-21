@@ -1,6 +1,6 @@
 class Thing {
   final String name, imageUrl, description;
-  final int votes, id;
+  final int likes, dislikes, id;
   final bool adult;
 
   Thing({
@@ -8,7 +8,8 @@ class Thing {
     required this.name,
     required this.imageUrl,
     required this.description,
-    required this.votes,
+    required this.likes,
+    required this.dislikes,
     required this.adult,
   });
 
@@ -18,8 +19,15 @@ class Thing {
       name: thing['name'],
       imageUrl: thing['image_url'],
       description: thing['description'],
-      votes: thing['votes'],
+      likes: thing['likes'],
+      dislikes: thing['dislikes'],
       adult: thing['adult'] != 0,
     );
+  }
+
+  int getPercentage() {
+    if (likes + dislikes == 0) return 0;
+
+    return likes * 100 ~/ (likes + dislikes);
   }
 }
