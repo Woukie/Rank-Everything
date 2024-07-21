@@ -124,29 +124,46 @@ class _StatsViewState extends State<StatsView> {
             ),
             const Divider(),
             Expanded(
-              child: ListView.builder(
-                itemCount: searchProvider.searchResults.length,
-                itemBuilder: (context, index) {
-                  Thing thing = searchProvider.searchResults[index];
+              child: Card(
+                child: ListView.builder(
+                  itemCount: searchProvider.searchResults.length,
+                  itemBuilder: (context, index) {
+                    Thing thing = searchProvider.searchResults[index];
 
-                  return ListTile(
-                    titleAlignment: ListTileTitleAlignment.center,
-                    title: Text(
-                      thing.name,
-                    ),
-                    leading: Text(
-                      (index + 1).toString(),
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    trailing: Text(
-                      thing.getPercentage().toString(),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    key: Key(index.toString()),
-                  );
-                },
+                    return ListTile(
+                      titleAlignment: ListTileTitleAlignment.center,
+                      title: Text(
+                        thing.name,
+                      ),
+                      leading: Text(
+                        (index + 1).toString(),
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      trailing: Text(
+                        thing.getPercentage().toString(),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      key: Key(index.toString()),
+                    );
+                  },
+                ),
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Text("Missing something?"),
+                  Expanded(child: Divider()),
+                ],
+              ),
+            ),
+            FilledButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+              label: const Text("Submit your own thing!"),
+            )
           ],
         ),
       ),
