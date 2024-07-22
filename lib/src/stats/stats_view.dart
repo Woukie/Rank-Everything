@@ -164,6 +164,7 @@ class _StatsViewState extends State<StatsView> {
               onPressed: () {
                 showDialog(
                   context: context,
+                  barrierDismissible: false,
                   builder: (context) {
                     return const SubmitForm();
                   },

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class SubmitForm extends StatefulWidget {
   const SubmitForm({
@@ -14,10 +17,32 @@ class _SubmitForm extends State<SubmitForm> {
   final imageController = TextEditingController();
   final descriptionController = TextEditingController();
 
-  bool adult = false;
+  bool adult = false, loading = false;
 
   @override
   Widget build(BuildContext context) {
+    Future<void> submit() async {
+      setState(() {
+        loading = true;
+      });
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      http.Response response = await http.post(
+        Uri.parse('https://rank.woukie.net/submit_thing'),
+        body: jsonEncode({
+          "name": nameController.text,
+          "description": descriptionController.text,
+          "imageUrl": imageController.text,
+          "adult": adult
+        }),
+      );
+
+      setState(() {
+        loading = false;
+      });
+    }
+
     return Center(
       child: Card(
         margin: MediaQuery.of(context).viewInsets,
@@ -29,6 +54,7 @@ class _SubmitForm extends State<SubmitForm> {
             children: [
               TextField(
                 controller: nameController,
+                enabled: !loading,
                 decoration: const InputDecoration(
                   label: Text("Name"),
                   border: OutlineInputBorder(),
@@ -37,6 +63,7 @@ class _SubmitForm extends State<SubmitForm> {
               const Padding(padding: EdgeInsets.all(3)),
               TextField(
                 controller: descriptionController,
+                enabled: !loading,
                 decoration: const InputDecoration(
                   label: Text("Description"),
                   border: OutlineInputBorder(),
@@ -67,6 +94,7 @@ class _SubmitForm extends State<SubmitForm> {
                   Expanded(
                     child: TextField(
                       controller: imageController,
+                      enabled: !loading,
                       onChanged: (value) => setState(() {}),
                       decoration: const InputDecoration(
                         label: Text("Image URL"),
@@ -83,11 +111,13 @@ class _SubmitForm extends State<SubmitForm> {
                 children: [
                   Switch(
                     value: adult,
-                    onChanged: (value) {
-                      setState(() {
-                        adult = value;
-                      });
-                    },
+                    onChanged: loading
+                        ? null
+                        : (value) {
+                            setState(() {
+                              adult = value;
+                            });
+                          },
                   ),
                   const Padding(padding: EdgeInsets.all(3)),
                   const Text("Adult"),
@@ -101,13 +131,22 @@ class _SubmitForm extends State<SubmitForm> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FilledButton.tonal(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: loading
+                        ? null
+                        : () {
+                            Navigator.pop(context);
+                          },
                     child: const Text("Cancel"),
                   ),
                   const Padding(padding: EdgeInsets.only(right: 6)),
-                  FilledButton(onPressed: () {}, child: const Text("Submit")),
+                  FilledButton(
+                    onPressed: loading
+                        ? null
+                        : () {
+                            submit();
+                          },
+                    child: const Text("Submit"),
+                  ),
                 ],
               ),
             ],
