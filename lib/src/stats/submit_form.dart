@@ -17,6 +17,8 @@ class _SubmitForm extends State<SubmitForm> {
   final imageController = TextEditingController();
   final descriptionController = TextEditingController();
 
+  String nameError = "", imageError = "", descriptionError = "";
+
   bool adult = false, loading = false;
 
   @override
@@ -41,6 +43,37 @@ class _SubmitForm extends State<SubmitForm> {
       setState(() {
         loading = false;
       });
+
+      Map<String, dynamic> body = jsonDecode(response.body);
+
+      if (body['status'] == 'success') {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Created thing!")));
+          Navigator.of(context).pop();
+        }
+
+        return;
+      }
+
+      String? param = body['param'];
+      String message = body['message'] ?? "";
+      if (param != null) {
+        setState(() {
+          switch (param) {
+            case 'name':
+              nameError = message;
+              break;
+            case 'imageUrl':
+              imageError = message;
+              break;
+            case 'description':
+              descriptionError = message;
+              break;
+            default:
+          }
+        });
+      }
     }
 
     return Center(
@@ -55,18 +88,27 @@ class _SubmitForm extends State<SubmitForm> {
               TextField(
                 controller: nameController,
                 enabled: !loading,
-                decoration: const InputDecoration(
-                  label: Text("Name"),
-                  border: OutlineInputBorder(),
+                onChanged: (value) => setState(() {
+                  nameError = "";
+                }),
+                decoration: InputDecoration(
+                  error: nameError.isEmpty ? null : Text(nameError),
+                  label: const Text("Name"),
+                  border: const OutlineInputBorder(),
                 ),
               ),
               const Padding(padding: EdgeInsets.all(3)),
               TextField(
                 controller: descriptionController,
                 enabled: !loading,
-                decoration: const InputDecoration(
-                  label: Text("Description"),
-                  border: OutlineInputBorder(),
+                onChanged: (value) => setState(() {
+                  descriptionError = "";
+                }),
+                decoration: InputDecoration(
+                  error:
+                      descriptionError.isEmpty ? null : Text(descriptionError),
+                  label: const Text("Description"),
+                  border: const OutlineInputBorder(),
                 ),
               ),
               const Padding(padding: EdgeInsets.all(3)),
@@ -95,10 +137,13 @@ class _SubmitForm extends State<SubmitForm> {
                     child: TextField(
                       controller: imageController,
                       enabled: !loading,
-                      onChanged: (value) => setState(() {}),
-                      decoration: const InputDecoration(
-                        label: Text("Image URL"),
-                        border: OutlineInputBorder(),
+                      onChanged: (value) => setState(() {
+                        imageError = "";
+                      }),
+                      decoration: InputDecoration(
+                        error: imageError.isEmpty ? null : Text(imageError),
+                        label: const Text("Image URL"),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
