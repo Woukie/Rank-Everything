@@ -83,7 +83,7 @@ class _SubmitForm extends State<SubmitForm> {
                         width: 56,
                         height: 56,
                         errorBuilder: (context, error, stackTrace) => Icon(
-                          Icons.error_outline,
+                          Icons.image_not_supported_outlined,
                           color: Theme.of(context).colorScheme.onSurface,
                           size: 56,
                         ),
