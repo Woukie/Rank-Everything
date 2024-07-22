@@ -36,7 +36,7 @@ class _SubmitForm extends State<SubmitForm> {
           "name": nameController.text,
           "description": descriptionController.text,
           "imageUrl": imageController.text,
-          "adult": adult
+          "adult": adult.toString()
         }),
       );
 
@@ -97,7 +97,7 @@ class _SubmitForm extends State<SubmitForm> {
                   border: const OutlineInputBorder(),
                 ),
               ),
-              const Padding(padding: EdgeInsets.all(3)),
+              const Padding(padding: EdgeInsets.all(4)),
               TextField(
                 controller: descriptionController,
                 enabled: !loading,
@@ -111,7 +111,7 @@ class _SubmitForm extends State<SubmitForm> {
                   border: const OutlineInputBorder(),
                 ),
               ),
-              const Padding(padding: EdgeInsets.all(3)),
+              const Padding(padding: EdgeInsets.all(4)),
               Row(
                 children: [
                   Card(
@@ -132,7 +132,7 @@ class _SubmitForm extends State<SubmitForm> {
                       ),
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.all(3)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: TextField(
                       controller: imageController,
@@ -164,7 +164,7 @@ class _SubmitForm extends State<SubmitForm> {
                             });
                           },
                   ),
-                  const Padding(padding: EdgeInsets.all(3)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   const Text("Adult"),
                 ],
               ),
