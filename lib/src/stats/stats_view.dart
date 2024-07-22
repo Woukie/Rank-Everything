@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/thing.dart';
 import 'package:rank_everything/src/stats/search_provider.dart';
+import 'package:rank_everything/src/stats/submit_form.dart';
 
 class StatsView extends StatefulWidget {
   const StatsView({
@@ -160,7 +161,14 @@ class _StatsViewState extends State<StatsView> {
               ),
             ),
             FilledButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const SubmitForm();
+                  },
+                );
+              },
               icon: const Icon(Icons.add),
               label: const Text("Submit your own thing!"),
             )
