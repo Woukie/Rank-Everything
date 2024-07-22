@@ -55,9 +55,9 @@ class _SubmitForm extends State<SubmitForm> {
                         fit: BoxFit.cover,
                         width: 56,
                         height: 56,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(
+                        errorBuilder: (context, error, stackTrace) => Icon(
                           Icons.error_outline,
+                          color: Theme.of(context).colorScheme.onSurface,
                           size: 56,
                         ),
                       ),
