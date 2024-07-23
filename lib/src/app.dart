@@ -74,20 +74,21 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             appBar: AppBar(
               title: AnimatedTitle(controller: _tabController),
             ),
-            bottomNavigationBar: TabBar(
-              controller: _tabController,
-              tabs: const [
-                Tab(icon: Icon(Icons.bar_chart)),
-                Tab(icon: Icon(Icons.home)),
-                Tab(icon: Icon(Icons.settings)),
-              ],
-            ),
             body: TabBarView(
               controller: _tabController,
               children: const [
                 StatsView(),
                 DashboardView(),
                 SettingsView(),
+              ],
+            ),
+            bottomNavigationBar: TabBar(
+              controller: _tabController,
+              dividerColor: Colors.transparent,
+              tabs: const [
+                Tab(icon: Icon(Icons.bar_chart)),
+                Tab(icon: Icon(Icons.home)),
+                Tab(icon: Icon(Icons.settings)),
               ],
             ),
           ),
