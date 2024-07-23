@@ -8,6 +8,7 @@ import 'package:rank_everything/src/stats/search_provider.dart';
 import 'package:rank_everything/src/stats/stats_view.dart';
 
 import 'settings/settings_view.dart';
+import 'widgets/animated_title.dart';
 
 class App extends StatefulWidget {
   const App({
@@ -92,22 +93,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
           ),
         );
       }),
-    );
-  }
-}
-
-class AnimatedTitle extends StatelessWidget {
-  const AnimatedTitle({
-    super.key,
-    required this.controller,
-  });
-
-  final TabController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: const Text('Settings'),
     );
   }
 }
