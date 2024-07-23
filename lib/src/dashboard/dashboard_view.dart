@@ -70,34 +70,29 @@ class _DashboardViewState extends State<DashboardView>
       default:
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Rank Everything'),
-      ),
-      body: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, child) {
-          return Stack(
-            alignment: Alignment.center,
-            fit: StackFit.loose,
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    flex: _flexTop.value,
-                    child: const ThingView(top: true),
-                  ),
-                  Expanded(
-                    flex: _flexBottom.value,
-                    child: const ThingView(top: false),
-                  ),
-                ],
-              ),
-              const DividerButton(),
-            ],
-          );
-        },
-      ),
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Stack(
+          alignment: Alignment.center,
+          fit: StackFit.loose,
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  flex: _flexTop.value,
+                  child: const ThingView(top: true),
+                ),
+                Expanded(
+                  flex: _flexBottom.value,
+                  child: const ThingView(top: false),
+                ),
+              ],
+            ),
+            const DividerButton(),
+          ],
+        );
+      },
     );
   }
 }

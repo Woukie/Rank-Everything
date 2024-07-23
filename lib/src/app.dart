@@ -9,8 +9,7 @@ import 'package:rank_everything/src/stats/stats_view.dart';
 
 import 'settings/settings_view.dart';
 
-/// The Widget that configures your application.
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({
     super.key,
     required this.settingsProvider,
@@ -19,12 +18,33 @@ class App extends StatelessWidget {
   final SettingsProvider settingsProvider;
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 3);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => settingsProvider),
-        ChangeNotifierProvider(create: (_) => SearchProvider(settingsProvider)),
-        ChangeNotifierProvider(create: (_) => ThingProvider(settingsProvider)),
+        ChangeNotifierProvider(create: (_) => widget.settingsProvider),
+        ChangeNotifierProvider(
+            create: (_) => SearchProvider(widget.settingsProvider)),
+        ChangeNotifierProvider(
+            create: (_) => ThingProvider(widget.settingsProvider)),
       ],
       child: Builder(builder: (context) {
         SettingsProvider settingsProvider =
@@ -49,24 +69,45 @@ class App extends StatelessWidget {
             fontFamily: GoogleFonts.fjallaOne().fontFamily,
           ),
           themeMode: settingsProvider.theme,
-          home: const DefaultTabController(
-            length: 3,
-            initialIndex: 1,
-            child: Scaffold(
-              bottomNavigationBar: TabBar(tabs: [
+          home: Scaffold(
+            appBar: AppBar(
+              title: AnimatedTitle(controller: _tabController),
+            ),
+            bottomNavigationBar: TabBar(
+              controller: _tabController,
+              tabs: const [
                 Tab(icon: Icon(Icons.bar_chart)),
                 Tab(icon: Icon(Icons.home)),
                 Tab(icon: Icon(Icons.settings)),
-              ]),
-              body: TabBarView(children: [
+              ],
+            ),
+            body: TabBarView(
+              controller: _tabController,
+              children: const [
                 StatsView(),
                 DashboardView(),
                 SettingsView(),
-              ]),
+              ],
             ),
           ),
         );
       }),
+    );
+  }
+}
+
+class AnimatedTitle extends StatelessWidget {
+  const AnimatedTitle({
+    super.key,
+    required this.controller,
+  });
+
+  final TabController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text('Settings'),
     );
   }
 }
