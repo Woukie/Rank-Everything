@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rank_everything/src/dashboard/dashboard_view.dart';
 import 'package:rank_everything/src/dashboard/thing_provider.dart';
@@ -38,10 +39,14 @@ class App extends StatelessWidget {
           supportedLocales: const [
             Locale('en', ''),
           ],
-          theme: ThemeData(colorSchemeSeed: seedColor),
+          theme: ThemeData(
+            colorSchemeSeed: seedColor,
+            fontFamily: GoogleFonts.fjallaOne().fontFamily,
+          ),
           darkTheme: ThemeData(
             colorSchemeSeed: seedColor,
             brightness: Brightness.dark,
+            fontFamily: GoogleFonts.fjallaOne().fontFamily,
           ),
           themeMode: settingsProvider.theme,
           home: const DefaultTabController(
