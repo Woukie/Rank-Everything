@@ -15,7 +15,6 @@ class AppRoot extends StatefulWidget {
 
 class _AppRootState extends State<AppRoot> with SingleTickerProviderStateMixin {
   late TabController tabController;
-  bool landscape = false;
 
   @override
   void initState() {
@@ -32,6 +31,10 @@ class _AppRootState extends State<AppRoot> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    bool landscape =
+        MediaQuery.of(context).size.width / MediaQuery.of(context).size.height >
+            1;
+
     return Row(
       children: [
         !landscape
