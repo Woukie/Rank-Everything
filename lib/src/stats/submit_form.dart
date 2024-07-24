@@ -77,124 +77,128 @@ class _SubmitForm extends State<SubmitForm> {
     }
 
     return Center(
-      child: Card(
-        margin: MediaQuery.of(context).viewInsets,
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: nameController,
-                enabled: !loading,
-                onChanged: (value) => setState(() {
-                  nameError = "";
-                }),
-                decoration: InputDecoration(
-                  error: nameError.isEmpty ? null : Text(nameError),
-                  label: const Text("Name"),
-                  border: const OutlineInputBorder(),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 500),
+        child: Card(
+          margin: MediaQuery.of(context).viewInsets,
+          child: Padding(
+            padding: const EdgeInsets.all(6),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: nameController,
+                  enabled: !loading,
+                  onChanged: (value) => setState(() {
+                    nameError = "";
+                  }),
+                  decoration: InputDecoration(
+                    error: nameError.isEmpty ? null : Text(nameError),
+                    label: const Text("Name"),
+                    border: const OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              const Padding(padding: EdgeInsets.all(4)),
-              TextField(
-                controller: descriptionController,
-                enabled: !loading,
-                onChanged: (value) => setState(() {
-                  descriptionError = "";
-                }),
-                decoration: InputDecoration(
-                  error:
-                      descriptionError.isEmpty ? null : Text(descriptionError),
-                  label: const Text("Description"),
-                  border: const OutlineInputBorder(),
+                const Padding(padding: EdgeInsets.all(4)),
+                TextField(
+                  controller: descriptionController,
+                  enabled: !loading,
+                  onChanged: (value) => setState(() {
+                    descriptionError = "";
+                  }),
+                  decoration: InputDecoration(
+                    error: descriptionError.isEmpty
+                        ? null
+                        : Text(descriptionError),
+                    label: const Text("Description"),
+                    border: const OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              const Padding(padding: EdgeInsets.all(4)),
-              Row(
-                children: [
-                  Card(
-                    margin: EdgeInsets.zero,
-                    color: Theme.of(context).colorScheme.surfaceContainerHigh,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        imageController.text,
-                        fit: BoxFit.cover,
-                        width: 56,
-                        height: 56,
-                        errorBuilder: (context, error, stackTrace) => Icon(
-                          Icons.image_not_supported_outlined,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          size: 56,
+                const Padding(padding: EdgeInsets.all(4)),
+                Row(
+                  children: [
+                    Card(
+                      margin: EdgeInsets.zero,
+                      color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          imageController.text,
+                          fit: BoxFit.cover,
+                          width: 56,
+                          height: 56,
+                          errorBuilder: (context, error, stackTrace) => Icon(
+                            Icons.image_not_supported_outlined,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            size: 56,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const Padding(padding: EdgeInsets.all(4)),
-                  Expanded(
-                    child: TextField(
-                      controller: imageController,
-                      enabled: !loading,
-                      onChanged: (value) => setState(() {
-                        imageError = "";
-                      }),
-                      decoration: InputDecoration(
-                        error: imageError.isEmpty ? null : Text(imageError),
-                        label: const Text("Image URL"),
-                        border: const OutlineInputBorder(),
+                    const Padding(padding: EdgeInsets.all(4)),
+                    Expanded(
+                      child: TextField(
+                        controller: imageController,
+                        enabled: !loading,
+                        onChanged: (value) => setState(() {
+                          imageError = "";
+                        }),
+                        decoration: InputDecoration(
+                          error: imageError.isEmpty ? null : Text(imageError),
+                          label: const Text("Image URL"),
+                          border: const OutlineInputBorder(),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const Text(
-                "The image URL must point directly to a valid image hosted on the web",
-              ),
-              Row(
-                children: [
-                  Switch(
-                    value: adult,
-                    onChanged: loading
-                        ? null
-                        : (value) {
-                            setState(() {
-                              adult = value;
-                            });
-                          },
-                  ),
-                  const Padding(padding: EdgeInsets.all(4)),
-                  const Text("Adult"),
-                ],
-              ),
-              const Text(
-                "Enable 'Adult' if the image contains adult material not suitable for a young audience",
-              ),
-              const Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FilledButton.tonal(
-                    onPressed: loading
-                        ? null
-                        : () {
-                            Navigator.pop(context);
-                          },
-                    child: const Text("Cancel"),
-                  ),
-                  const Padding(padding: EdgeInsets.only(right: 6)),
-                  FilledButton(
-                    onPressed: loading
-                        ? null
-                        : () {
-                            submit();
-                          },
-                    child: const Text("Submit"),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                const Text(
+                  "The image URL must point directly to a valid image hosted on the web",
+                ),
+                Row(
+                  children: [
+                    Switch(
+                      value: adult,
+                      onChanged: loading
+                          ? null
+                          : (value) {
+                              setState(() {
+                                adult = value;
+                              });
+                            },
+                    ),
+                    const Padding(padding: EdgeInsets.all(4)),
+                    const Text("Adult"),
+                  ],
+                ),
+                const Text(
+                  "Enable 'Adult' if the image contains adult material not suitable for a young audience",
+                ),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FilledButton.tonal(
+                      onPressed: loading
+                          ? null
+                          : () {
+                              Navigator.pop(context);
+                            },
+                      child: const Text("Cancel"),
+                    ),
+                    const Padding(padding: EdgeInsets.only(right: 6)),
+                    FilledButton(
+                      onPressed: loading
+                          ? null
+                          : () {
+                              submit();
+                            },
+                      child: const Text("Submit"),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
