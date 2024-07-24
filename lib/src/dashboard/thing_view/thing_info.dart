@@ -9,10 +9,11 @@ class ThingInfo extends StatelessWidget {
     required this.thing,
     required this.top,
     required this.padding,
+    required this.landscape,
   });
 
   final Thing? thing;
-  final bool top, padding;
+  final bool top, padding, landscape;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,8 @@ class ThingInfo extends StatelessWidget {
                                 duration: const Duration(milliseconds: 120),
                                 curve: Curves.easeInOut,
                                 child: SizedBox(
-                                    width: 10, height: padding ? 24 : 0),
+                                    width: 10,
+                                    height: !padding || landscape ? 0 : 24),
                               ),
                               Column(
                                 mainAxisSize: MainAxisSize.min,

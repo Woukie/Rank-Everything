@@ -11,9 +11,10 @@ class ThingView extends StatefulWidget {
   const ThingView({
     super.key,
     required this.top,
+    required this.landscape,
   });
 
-  final bool top;
+  final bool top, landscape;
 
   @override
   State<ThingView> createState() => _ThingViewState();
@@ -58,6 +59,7 @@ class _ThingViewState extends State<ThingView> {
               thing: thing,
               top: widget.top,
               padding: thingProvider.gameState != GameState.chosen,
+              landscape: widget.landscape,
             ),
           ],
         ),

@@ -85,11 +85,11 @@ class _DashboardViewState extends State<DashboardView>
               children: [
                 Expanded(
                   flex: _flexTop.value,
-                  child: const ThingView(top: true),
+                  child: ThingView(top: true, landscape: widget.landscape),
                 ),
                 Expanded(
                   flex: _flexBottom.value,
-                  child: const ThingView(top: false),
+                  child: ThingView(top: false, landscape: widget.landscape),
                 ),
               ],
             ),
