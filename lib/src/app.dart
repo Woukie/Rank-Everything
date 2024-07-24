@@ -39,6 +39,7 @@ class _AppState extends State<App> {
             : settingsProvider.color;
 
         return MaterialApp(
+          title: "Rank Everything",
           restorationScopeId: 'app',
           supportedLocales: const [
             Locale('en', ''),
