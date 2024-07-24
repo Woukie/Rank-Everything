@@ -7,7 +7,10 @@ import 'thing_view/thing_view.dart';
 class DashboardView extends StatefulWidget {
   const DashboardView({
     super.key,
+    required this.landscape,
   });
+
+  final bool landscape;
 
   @override
   State<DashboardView> createState() => _DashboardViewState();
@@ -77,7 +80,8 @@ class _DashboardViewState extends State<DashboardView>
           alignment: Alignment.center,
           fit: StackFit.loose,
           children: [
-            Column(
+            Flex(
+              direction: widget.landscape ? Axis.horizontal : Axis.vertical,
               children: [
                 Expanded(
                   flex: _flexTop.value,

@@ -72,10 +72,12 @@ class _AppRootState extends State<AppRoot> with SingleTickerProviderStateMixin {
             ),
             body: TabBarView(
               controller: tabController,
-              children: const [
-                StatsView(),
-                DashboardView(),
-                SettingsView(),
+              children: [
+                const StatsView(),
+                DashboardView(
+                  landscape: landscape,
+                ),
+                const SettingsView(),
               ],
             ),
             bottomNavigationBar: landscape
