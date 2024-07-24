@@ -65,6 +65,9 @@ class _AppRootState extends State<AppRoot> with SingleTickerProviderStateMixin {
         Expanded(
           child: Scaffold(
             appBar: AppBar(
+              backgroundColor: landscape
+                  ? Theme.of(context).colorScheme.surfaceContainerLow
+                  : null,
               title: AnimatedTitle(controller: tabController),
             ),
             body: TabBarView(
