@@ -31,9 +31,8 @@ class _AppRootState extends State<AppRoot> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    bool landscape =
-        MediaQuery.of(context).size.width / MediaQuery.of(context).size.height >
-            1;
+    double height = MediaQuery.of(context).size.height;
+    bool landscape = MediaQuery.of(context).size.width / height > 1;
 
     return Row(
       children: [
@@ -64,12 +63,14 @@ class _AppRootState extends State<AppRoot> with SingleTickerProviderStateMixin {
               ),
         Expanded(
           child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: landscape
-                  ? Theme.of(context).colorScheme.surfaceContainer
-                  : null,
-              title: AnimatedTitle(controller: tabController),
-            ),
+            appBar: height < 400
+                ? null
+                : AppBar(
+                    backgroundColor: landscape
+                        ? Theme.of(context).colorScheme.surfaceContainer
+                        : null,
+                    title: AnimatedTitle(controller: tabController),
+                  ),
             body: TabBarView(
               controller: tabController,
               children: [
