@@ -39,6 +39,7 @@ class _AppRootState extends State<AppRoot> with SingleTickerProviderStateMixin {
         !landscape
             ? Container()
             : NavigationRail(
+                elevation: height < 400 ? 2 : 0,
                 backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
                 onDestinationSelected: (value) =>
                     tabController.animateTo(value),
